@@ -1,0 +1,43 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<form role="form" action="/board/updateBoard" method="post">
+		<div>
+			
+			<label>boardNum</label>
+			<input name="boardNum" readonly="readonly">
+			
+			<label>Title</label>
+			<input name="boardTitle">
+			
+			<label>Text area</label>
+			<textarea name="boardContent"></textarea>
+			 
+			
+			<label>writer</label>
+			<input name="boardWriter">
+			
+			
+			<button type="submit">submit</button>
+			<button type="reset">reset</button>
+		
+		
+		</div>
+		
+	
+	</form>
+
+
+</body>
+</html>

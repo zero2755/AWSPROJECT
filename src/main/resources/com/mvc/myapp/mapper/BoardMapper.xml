@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mvc.myapp.mapper.BoardMapper">
+
+<select id="getBoardList" resultType="com.mvc.myapp.domain.BoardVO">
+<![CDATA[
+
+select * from tbl_board7 where boardNum > 0
+
+]]>
+
+</select>
+
+<insert id="createBoard">
+	<selectKey keyProperty="boardNum" order="BEFORE"
+	resultType="long">
+	select seq_board7.nextval from dual
+	</selectKey>
+	
+	insert into tbl_board7 (boardNum,boardTitle,boardContent,boardWriter)
+	values (#{boardNum}, #{boardTitle}, #{boardContent}, #{boardWriter})
+
+</insert>
+
+<select id="readBoard" resultType="com.mvc.myapp.domain.BoardVO">
+
+select * from tbl_board7 where boardNum = #{boardNum}
+
+</select>
+
+
+<update id="updateBoard">
+	update tbl_board7 set boardTitle=#{boardTitle},
+	boardContent=#{boardContent}, boardWriter=#{boardWriter},
+	updateDate=sysdate
+	where boardNum=#{boardNum}
+
+</update>
+
+<delete id="deleteBoard">
+
+	delete from tbl_board7 where boardNum=#{boardNum}
+
+</delete>
+
+
+</mapper>
