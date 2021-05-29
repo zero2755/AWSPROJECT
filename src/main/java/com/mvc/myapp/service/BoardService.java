@@ -3,6 +3,7 @@ package com.mvc.myapp.service;
 import java.util.List;
 
 import com.mvc.myapp.domain.BoardVO;
+import com.mvc.myapp.domain.Criteria;
 
 public interface BoardService {
 	
@@ -14,6 +15,10 @@ public interface BoardService {
 	
 	public boolean deleteBoard(Long boardNum);
 	
-	public List<BoardVO> getBoardList();
+	//public List<BoardVO> getBoardList();
+	
+	public List<BoardVO> getBoardListWithPaging(Criteria cri);
+	
+	public int getTotal(Criteria cri);
 	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.mvc.myapp.domain.BoardVO;
+import com.mvc.myapp.domain.Criteria;
 import com.mvc.myapp.mapper.BoardMapper;
 
 import lombok.AllArgsConstructor;
@@ -53,12 +54,33 @@ public class BoardServiceImpl  implements BoardService{
 		return mapper.deleteBoard(boardNum)==1;
 	}
 
+	/*
+	 * @Override public List<BoardVO> getBoardList() {
+	 * 
+	 * log.info("service -  getBoardList호출 ============");
+	 * 
+	 * return mapper.getBoardList();
+	 * 
+	 * }
+	 */
+	
 	@Override
-	public List<BoardVO> getBoardList() {
+	public List<BoardVO> getBoardListWithPaging(Criteria cri) {
 		
-		log.info("service -  getBoardList호출 ============");
+		log.info("service -  getBoardListWithPaging호출 ============");
 		
-		return mapper.getBoardList();
+		log.info("cri 정보 : " +cri);
+		
+		return mapper.getBoardListWithPaging(cri);
+		
+	}
+
+	@Override
+	public int getTotal(Criteria cri) {
+		
+		log.info("get total count ServiceImpl호출 " );
+		
+		return mapper.getTotalCount(cri);
 		
 	}
 

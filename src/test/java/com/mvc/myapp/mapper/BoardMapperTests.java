@@ -1,5 +1,7 @@
 package com.mvc.myapp.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mvc.myapp.domain.BoardVO;
+import com.mvc.myapp.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -58,11 +61,31 @@ public class BoardMapperTests {
 	 * System.out.println("==========" + count); }
 	 */
 	
+	/*
+	 * @Test public void testDelete() {
+	 * 
+	 * log.info("================ "+mapper.deleteBoard(4L));
+	 * 
+	 * }
+	 */
+	
+	
 	@Test
-	public void testDelete() {
+	public void testPaging() {
+	
+		/*
+		 * Criteria cri=new Criteria();
+		 * 
+		 * List<BoardVO> list=mapper.getBoardListWithPaging(cri);
+		 * 
+		 * list.forEach(board -> log.info(board));
+		 */
 		
-		log.info("================ "+mapper.deleteBoard(4L));
+		
+		
 		
 	}
+	
+	
 
 }

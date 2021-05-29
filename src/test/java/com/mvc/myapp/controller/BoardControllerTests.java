@@ -80,21 +80,31 @@ public class BoardControllerTests {
 	 */
 	
 	
-	@Test
-	public void testRemove() throws Exception {
-	
-		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/board/removeBoard")
-				 
-				.param("boardNum", "5"))
-				.andReturn()
-				.getModelAndView()
-				.getViewName();
-
-		log.info(resultPage);
-	}
+	/*
+	 * @Test public void testRemove() throws Exception {
+	 * 
+	 * String resultPage =
+	 * mockMvc.perform(MockMvcRequestBuilders.post("/board/removeBoard")
+	 * 
+	 * .param("boardNum", "5")) .andReturn() .getModelAndView() .getViewName();
+	 * 
+	 * log.info(resultPage); }
+	 */
 	
 	
-	
+	  @Test public void testList() throws Exception 
+	  {
+	  
+	  log.info( mockMvc.perform(MockMvcRequestBuilders
+			  .get("/board/list")
+			  .param("pageNum","1")
+			  .param("amountPerPage","10"))
+			  .andReturn()
+			  .getModelAndView()
+			  .getModelMap()); 
+	  
+	  }
+	 
 	
 	
 	

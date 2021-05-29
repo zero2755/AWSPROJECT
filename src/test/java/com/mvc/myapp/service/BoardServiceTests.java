@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mvc.myapp.domain.BoardVO;
+import com.mvc.myapp.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -70,12 +71,18 @@ public class BoardServiceTests {
 	 * }
 	 */
 	
+	
+	/*
+	 * @Test public void testDeleteBoard() {
+	 * 
+	 * log.info("삭제 리턴값 ============"+service.deleteBoard(2L)); }
+	 */
+	 
+	
 	@Test
-	public void testDeleteBoard() {
+	public void testPagingList() {
 		
-		log.info("삭제 리턴값 ============"+service.deleteBoard(2L));
+		service.getBoardListWithPaging(new Criteria(1,10)).forEach(board ->log.info(board));
 	}
-	
-	
 	
 }
