@@ -35,6 +35,11 @@
 			<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
 			<input type='hidden' name='amountPerPage' value='<c:out value="${cri.amountPerPage}"/>'>
 			
+			<input type='hidden' name='type'
+					value='<c:out value="${ pageMaker.cri.type }"/>'> 
+				<input type='hidden' name='keyword'
+					 value='<c:out value="${ pageMaker.cri.keyword }"/>'>
+			
 			
 			<button type="submit" data-oper="updateBoard">수정</button>
 			<button type="reset">reset</button>
@@ -82,15 +87,15 @@ $(document).ready(function() {
 	      
 	      var pageNumTag = $("input[name='pageNum']").clone();
 	      var amountTag = $("input[name='amountPerPage']").clone();
-	    //  var keywordTag = $("input[name='keyword']").clone();
-	    //  var typeTag = $("input[name='type']").clone();      
+	      var keywordTag = $("input[name='keyword']").clone();
+	      var typeTag = $("input[name='type']").clone();      
 	      
 	      formObj.empty();
 	      
 	      formObj.append(pageNumTag);
 	      formObj.append(amountTag);
-	   //   formObj.append(keywordTag);
-	   //   formObj.append(typeTag);	       
+	   	  formObj.append(keywordTag);
+	      formObj.append(typeTag);	       
 	    }
 	    
 	    formObj.submit();
