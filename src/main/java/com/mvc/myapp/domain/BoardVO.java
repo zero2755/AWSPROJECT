@@ -14,5 +14,6 @@ public class BoardVO {
 	private String boardWriter;
 	private Date regdate;
 	private Date updateDate;
+	
 
 }

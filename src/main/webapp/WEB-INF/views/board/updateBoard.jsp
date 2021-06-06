@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@include file="../header/header.jsp"%>
 
 
 <!DOCTYPE html>
@@ -17,21 +19,32 @@
 	<form role="form" action="/board/updateBoard" method="post">
 		<div>
 			
+			<div class="form-group">
 			<label>boardNum</label>
 			<input name="boardNum" value="${board.boardNum}" readonly="readonly">
+			</div>
 			
+			
+			<div class="form-group">
 			<label>Title</label>
 			<input name="boardTitle">
+			</div>
 			
+			<div class="form-group">
 			<label>Text area</label>
 			<textarea name="boardContent"></textarea>
-			 
+			 </div>
 			
+			
+			<div class="form-group">
 			<label>writer</label>
-			<input name="boardWriter">
-			
+			<input name="boardWriter" value="${board.boardWriter }" readonly="readonly">
+			</div>
 			
 			<!-- 추가 -->
+			
+			 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
+			
 			<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
 			<input type='hidden' name='amountPerPage' value='<c:out value="${cri.amountPerPage}"/>'>
 			
@@ -41,11 +54,26 @@
 					 value='<c:out value="${ pageMaker.cri.keyword }"/>'>
 			
 			
-			<button type="submit" data-oper="updateBoard">수정</button>
+			
 			<button type="reset">reset</button>
 			<button type="submit" data-oper='list'>목록</button>
-			<button type="submit" data-oper="deleteBoard">삭제</button>
-		
+			
+<button type="submit" data-oper="updateBoard" class="btn btn-default">수정하기</button>
+ <button type="submit" data-oper="deleteBoard" class="btn btn-default">삭제</button>			
+	
+	
+	
+<sec:authentication property="principal" var="pinfo"/>
+
+<sec:authorize access="isAuthenticated()">
+
+<c:if test="${pinfo.username eq board.writer}">
+
+  <button type="submit" data-oper="updateBoard">수정</button>
+ <button type="submit" data-oper="deleteBoard">삭제</button>
+</c:if>
+</sec:authorize>	
+				
 		
 		</div>
 		
@@ -74,12 +102,7 @@ $(document).ready(function() {
 	      
 	    }else if(operation === 'list'){
 	      
-	    	
-	    	  //기존의 처리 1페이지로
-	    	  // self.location="/board/list";
-	 	     // return;
-	    	
-	    	//move to list with cri정보
+    	
 	      formObj.attr("action", "/board/list").attr("method","get");
 	      
 	      

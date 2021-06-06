@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@include file="../header/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,35 +51,135 @@
 
 
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Reading Board Page</title>
 </head>
 <body>
 
-<div>
-			
-			<div>
+
+
+
+<div class="list-group">
+			<div class="list-group-item">
 				<label>BoardNumber</label>
 				<input name="boardNum" value='<c:out value="${board.boardNum }"/>' readonly="readonly">
 			</div>
 			
-			<div>
+			<div class="list-group-item">
 				<label>TITLE</label>
 				<input name="boardTitle" value='<c:out value="${board.boardTitle }"/>' readonly="readonly">
 			</div>
 			
-			<div>
+			<div class="list-group-item">
 				<label>CONTENT</label>
-				<input name="boardContent" value='<c:out value="${board.boardContent }"/>' readonly="readonly">
+				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"  readonly="readonly">
+				<c:out value="${board.boardContent }"/>
+				</textarea>
+				
 			</div>
 			
-			<div>
+				<div class="list-group-item">
 				<label>WRITER</label>
 				<input name="boardWriter" value='<c:out value="${board.boardWriter }"/>' readonly="readonly">
 			</div>
-
+</div>
+		
 
  
+
+<div >
+	<table id='listTable' class="table table-striped table-bordered table-hover" text-align:'center'>
+		<tr>
+			<th>리플번호</th>
+			<th>리플내용</th>
+			<th>작성자</th>
+			<th>작성일</th>
+			<th>수정일</th>
+			<th>댓글삭제하기</th>
+		</tr>
+		
+		<c:forEach items="${replyList}" var="replyVO">
+	
+		<tr >
+		 
+			 
+			<td><c:out value="${replyVO.rno}" /></td>
+			<td>
+				
+				
+					
+								<c:out value="${replyVO.reply}" />
+			 
+			</td>
+		
+			<td><c:out value="${replyVO.replyer}" /></td>
+			<td><fmt:formatDate pattern="yyyy-MM-dd"
+									value="${replyVO.replyDate}" /></td>
+			<td><fmt:formatDate pattern="yyyy-MM-dd"
+									value="${replyVO.updateDate}" /></td>
+			<td>
+			
+				<form action="/replies/${replyVO.rno}/${board.boardNum}"  method="post">
+  					<input type="hidden" name="_method" value="delete" />
+  					
+					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+					<input type='hidden' name='amountPerPage' value='<c:out value="${cri.amountPerPage}"/>'>
+  					<input type="hidden" name="boardNum" value="${board.boardNum }">
+  					<button type="submit" class="btn btn-default">댓글삭제</button>
+				</form>
+			
+			
+			</td>
+			
+			
+		</tr>
+		
+		</c:forEach>
+		
+	</table>
+
+	</div>
+
+
+
+
+			
+<div class="list-group">
+<div class="list-group-item">
+<form name="replyForm" action="/reply/new" method="post">
+		
+			 
+			<input type='hidden' id='boardNum' name='boardNum' value='<c:out value="${board.boardNum}"/>'>
+			
+			
+			<label>reply</label>
+			<input type='text' name='reply' />
+			 
+			 
+			<label>Replyer</label>
+			<input type ='text' name='replyer' />
+			
+			
+		 
+		
+		
+		
+		
+	
+	</form>
+	<div class='readBtns'>
+	<button data-oper='createReply' class="btn btn-default">새 댓글 등록</button>
+	<button data-oper='list' class="btn btn-default">게시글 리스트</button>
+	<button data-oper='updateBoard' class="btn btn-default">게시글 수정</button>
+	</div>
 </div>
+</div>
+
+
+
+
+
+
+
 
 <div>
 
@@ -85,8 +187,22 @@
 	
 	<!-- form형식 확장을 위해 -->
 	
-	<button data-oper='updateBoard' >게시글 수정</button>
-	<button data-oper='list'>게시글 리스트</button>
+	 <sec:authentication property="principal" var="pinfo"/>
+
+        <sec:authorize access="isAuthenticated()">
+
+        <c:if test="${pinfo.username eq board.boardWriter}">
+        
+        <button data-oper='updateBoard'>게시글 수정</button>
+        
+        </c:if>
+      </sec:authorize>
+	
+	
+	
+	
+	
+	 
 	
 	<form id='operForm' action="/board/updateBoard" method="get">
 		<input type='hidden' id='boardNum' name='boardNum' value='<c:out value="${board.boardNum}"/>'>
@@ -105,308 +221,11 @@
 </div>
 
 
-<!-- 댓글목록 -->
-
-<div class='row'>
-
-  <div class="col-lg-12">
-
-    <!-- /.panel -->
-    <div class="panel panel-default">
-<!--       <div class="panel-heading">
-        <i class="fa fa-comments fa-fw"></i> Reply
-      </div> -->
-      
-      <div class="panel-heading">
-        <i class="fa fa-comments fa-fw"></i> Reply
-        <button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
-      </div>      
-      
-      
-      <!-- /.panel-heading -->
-      <div class="panel-body">        
-      
-        <ul class="chat">
-
-        </ul>
-        <!-- ./ end ul -->
-      </div>
-      <!-- /.panel .chat-panel -->
-
-	<div class="panel-footer"></div>
-
-
-		</div>
-  </div>
-  <!-- ./ end row -->
-</div>
-
-
-
-<!-- Modal -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-        aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal"
-                aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">REPLY MODAL</h4>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label>Reply</label> 
-                <input class="form-control" name='reply' value='New Reply!!!!'>
-              </div>      
-              <div class="form-group">
-                <label>Replyer</label> 
-                <input class="form-control" name='replyer' value='replyer'>
-              </div>
-              <div class="form-group">
-                <label>Reply Date</label> 
-                <input class="form-control" name='replyDate' value='2021-03-01 15:00'>
-              </div>
-      
-            </div>
-<div class="modal-footer">
-        <button id='modalModBtn' type="button" class="btn btn-warning">Update</button>
-        <button id='modalRemoveBtn' type="button" class="btn btn-danger">Delete</button>
-        <button id='modalRegisterBtn' type="button" class="btn btn-primary">Register</button>
-        <button id='modalCloseBtn' type="button" class="btn btn-default">Close</button>
-      </div>          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
-
-
-
+ 
 
 
 
 </body>
-
-<script type="text/javascript" src="../../resources/js/reply.js"></script>
-
-<script type="text/javascript">
-
-$(document).ready(function () {
-	  
-	  var boardNumValue = '<c:out value="${board.boardNum}"/>';
-	  var replyUL = $(".chat");
-	  
-	    showList(1);
-	    
-	function showList(page){
-		
-		  console.log("show list " + page);
-	    
-	    replyService.getList({boardNum:boardNumValue,page: page|| 1 }, function(replyCnt, list) {
-	      
-	    console.log("replyCnt: "+ replyCnt );
-	    console.log("list: " + list);
-	    console.log(list);
-	    
-	    if(page == -1){
-	      pageNum = Math.ceil(replyCnt/10.0);
-	      showList(pageNum);
-	      return;
-	    }
-	      
-	     var str="";
-	     
-	     if(list == null || list.length == 0){
-	       return;
-	     }
-	     
-	     for (var i = 0, len = list.length || 0; i < len; i++) {
-	       str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
-	       str +="  <div><div class='header'><strong class='primary-font'>["
-	    	   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
-	       str +="    <small class='pull-right text-muted'>"
-	           +replyService.displayTime(list[i].replyDate)+"</small></div>";
-	       str +="    <p>"+list[i].reply+"</p></div></li>";
-	     }
-	     
-	     replyUL.html(str);
-	     
-	     showReplyPage(replyCnt);
-
-	 
-	   });//end function
-	     
-	 }//end showList
-	    
-	    var pageNum = 1;
-	    var replyPageFooter = $(".panel-footer");
-	    
-	    function showReplyPage(replyCnt){
-	      
-	      var endNum = Math.ceil(pageNum / 10.0) * 10;  
-	      var startNum = endNum - 9; 
-	      
-	      var prev = startNum != 1;
-	      var next = false;
-	      
-	      if(endNum * 10 >= replyCnt){
-	        endNum = Math.ceil(replyCnt/10.0);
-	      }
-	      
-	      if(endNum * 10 < replyCnt){
-	        next = true;
-	      }
-	      
-	      var str = "<ul class='pagination pull-right'>";
-	      
-	      if(prev){
-	        str+= "<li class='page-item'><a class='page-link' href='"+(startNum -1)+"'>Previous</a></li>";
-	      }
-	      
-	      for(var i = startNum ; i <= endNum; i++){
-	        
-	        var active = pageNum == i? "active":"";
-	        
-	        str+= "<li class='page-item "+active+" '><a class='page-link' href='"+i+"'>"+i+"</a></li>";
-	      }
-	      
-	      if(next){
-	        str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>Next</a></li>";
-	      }
-	      
-	      str += "</ul></div>";
-	      
-	      console.log(str);
-	      
-	      replyPageFooter.html(str);
-	    }
-	     
-	    replyPageFooter.on("click","li a", function(e){
-	       e.preventDefault();
-	       console.log("page click");
-	       
-	       var targetPageNum = $(this).attr("href");
-	       
-	       console.log("targetPageNum: " + targetPageNum);
-	       
-	       pageNum = targetPageNum;
-	       
-	       showList(pageNum);
-	     });     
-
-
-	   
-	    var modal = $(".modal");
-	    var modalInputReply = modal.find("input[name='reply']");
-	    var modalInputReplyer = modal.find("input[name='replyer']");
-	    var modalInputReplyDate = modal.find("input[name='replyDate']");
-	    
-	    var modalModBtn = $("#modalModBtn");
-	    var modalRemoveBtn = $("#modalRemoveBtn");
-	    var modalRegisterBtn = $("#modalRegisterBtn");
-	    
-	    $("#modalCloseBtn").on("click", function(e){
-	    	
-	    	modal.modal('hide');
-	    });
-	    
-	    $("#addReplyBtn").on("click", function(e){
-	      
-	      modal.find("input").val("");
-	      modalInputReplyDate.closest("div").hide();
-	      modal.find("button[id !='modalCloseBtn']").hide();
-	      
-	      modalRegisterBtn.show();
-	      
-	      $(".modal").modal("show");
-	      
-	    });
-	    
-
-	    modalRegisterBtn.on("click",function(e){
-	      
-	      var reply = {
-	            reply: modalInputReply.val(),
-	            replyer:modalInputReplyer.val(),
-	            boardNum:boardNumValue
-	          };
-	      replyService.add(reply, function(result){
-	        
-	        alert(result);
-	        
-	        modal.find("input").val("");
-	        modal.modal("hide");
-	        
-	        //showList(1);
-	        showList(-1);
-	        
-	      });
-	      
-	    });
-
-
-	  //댓글 조회 클릭 이벤트 처리 
-	    $(".chat").on("click", "li", function(e){
-	      
-	      var rno = $(this).data("rno");
-	      
-	      replyService.get(rno, function(reply){
-	      
-	        modalInputReply.val(reply.reply);
-	        modalInputReplyer.val(reply.replyer);
-	        modalInputReplyDate.val(replyService.displayTime( reply.replyDate))
-	        .attr("readonly","readonly");
-	        modal.data("rno", reply.rno);
-	        
-	        modal.find("button[id !='modalCloseBtn']").hide();
-	        modalModBtn.show();
-	        modalRemoveBtn.show();
-	        
-	        $(".modal").modal("show");
-	            
-	      });
-	    });
-	  
-	    
-	
-
-	    modalModBtn.on("click", function(e){
-	    	  
-	   	  var reply = {rno:modal.data("rno"), reply: modalInputReply.val()};
-	   	  
-	   	  replyService.update(reply, function(result){
-	   	        
-	   	    alert(result);
-	   	    modal.modal("hide");
-	   	    showList(pageNum);
-	   	    
-	   	  });
-	   	  
-	   	});
-
-
-	   	modalRemoveBtn.on("click", function (e){
-	   	  
-	   	  var rno = modal.data("rno");
-	   	  
-	   	  replyService.remove(rno, function(result){
-	   	        
-	   	      alert(result);
-	   	      modal.modal("hide");
-	   	      showList(pageNum);
-	   	      
-	   	  });
-	   	  
-	   	});
-
-	 
-	});
-	
-	
-
-</script>
-
-
 
 
 
@@ -416,6 +235,10 @@ $(document).ready(function(){
 	
 	
 	var operForm=$("#operForm");
+	
+	var replyForm=$("#replyForm");
+	
+	
 	
 	  $("button[data-oper='updateBoard']").on("click", function(e){
 		    
@@ -431,6 +254,63 @@ $(document).ready(function(){
 		    operForm.submit();
 		    
 		 });  
+	
+	
+	$("button[data-oper='createReply']").on("click", function(e){
+	  	
+		//var test1 = document.replyForm.getElementByName('reply');
+		var replyVal =document.replyForm.reply.value;
+		var replyerVal= document.replyForm.replyer.value;
+		var boardNumVal=document.replyForm.boardNum.value;
+		
+		
+		
+		
+		var replyJSON={
+				reply: replyVal,
+	            replyer: replyerVal,
+	            boardNum: boardNumVal
+				
+		}
+		
+		 
+		
+		$.ajax({
+			type : 'post',
+			url : '/replies/new',
+			data : JSON.stringify(replyJSON),
+			contentType : "application/json; charset=utf-8",
+			success : function() {
+				
+				alert("enroll good");
+				
+					var addingTable = '';	
+									
+					var now=new Date();
+					addingTable += '<tr>';
+					addingTable += '<td>'+replyVal+'</td>';
+					addingTable += '<td>'+replyerVal+'</td>';
+					addingTable += '<td>'+now+'</td>';
+					addingTable += '<td>'+now+'</td>';
+					addingTable += '</tr>';	
+					
+										
+					
+					$("#listTable").append(addingTable);
+									
+				 
+				
+			},
+			error : function() {
+				
+				alert("enroll fail");
+			}
+		})
+		
+	
+	 }); 
+	 
+	 
 });
 
 

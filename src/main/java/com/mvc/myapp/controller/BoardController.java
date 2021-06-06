@@ -1,5 +1,6 @@
 package com.mvc.myapp.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import com.mvc.myapp.domain.BoardVO;
 import com.mvc.myapp.domain.Criteria;
 import com.mvc.myapp.domain.PageDTO;
 import com.mvc.myapp.service.BoardService;
+import com.mvc.myapp.service.ReplyService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -24,6 +26,8 @@ import lombok.extern.log4j.Log4j;
 public class BoardController {
 	 
 	private BoardService service;
+	
+	private ReplyService replyService;
 	
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
@@ -39,15 +43,18 @@ public class BoardController {
 		model.addAttribute("list", service.getBoardListWithPaging(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri,123));
 		
+		
 	}
 	
 	
 	@GetMapping("/createBoard")
+	//@PreAuthorize("isAuthenticated()")
 	public void register() {
 		
 	}
 	 
 	@PostMapping("/createBoard")
+	//@PreAuthorize("isAuthenticated()")
 	public String createBoard(BoardVO board, RedirectAttributes rttr) {
 		
 		log.info("컨트롤러 ------보드등록" +board);
@@ -66,6 +73,7 @@ public class BoardController {
 		
 		log.info("컨트롤러 -------- 보드 조회");
 		model.addAttribute("board", service.readBoard(boardNum));
+		model.addAttribute("replyList", replyService.getReplyList(boardNum));
 		
 	}
 	
@@ -77,6 +85,8 @@ public class BoardController {
 		model.addAttribute("board", service.readBoard(boardNum));
 	}
 	
+	
+	//@PreAuthorize("principal.username == #board.boardWriter")
 	@PostMapping("/updateBoard")
 	public String updateBoard(BoardVO board,
 			@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
@@ -99,10 +109,10 @@ public class BoardController {
 	}
 	
 	
-	
+	//@PreAuthorize("principal.username == #boardWriter")
 	@PostMapping("/deleteBoard")
 	public String deleteBoard(@RequestParam("boardNum") Long boardNum,
-			@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr )
+			@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr ,String boardWriter)
 	{
 	log.info("컨트롤러--------보드 삭제");
 		

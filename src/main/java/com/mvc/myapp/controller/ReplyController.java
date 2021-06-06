@@ -5,17 +5,19 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mvc.myapp.domain.Criteria;
-import com.mvc.myapp.domain.ReplyPageDTO;
 import com.mvc.myapp.domain.ReplyVO;
 import com.mvc.myapp.service.ReplyService;
 
@@ -31,14 +33,14 @@ public class ReplyController {
 	private ReplyService service;
 	
 	 
+	//@PreAuthorize("isAuthenticated()") //
 	
 	
-	
-	
+	 
 	@PostMapping(value="/new",consumes = "application/json",
 			produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> createReply(@RequestBody ReplyVO vo){
-		
+		 
 		
 		log.info("ReplyVO : "+ vo);
 		
@@ -57,68 +59,50 @@ public class ReplyController {
 	
 	
 	
-		@GetMapping(value = "/{rno}", produces = { MediaType.APPLICATION_XML_VALUE,
-				MediaType.APPLICATION_JSON_UTF8_VALUE })
-		public ResponseEntity<ReplyVO> readReply(@PathVariable("rno") Long rno) {
-
-			log.info("readRNO: " + rno);
-
-			return new ResponseEntity<>(service.readReply(rno), HttpStatus.OK);
-		}
-	 
 		
 		
 		
 		
 		
-		
-		@RequestMapping(method = { RequestMethod.PUT,
-				RequestMethod.PATCH }, value = "/{rno}", consumes = "application/json", produces = {
-						MediaType.TEXT_PLAIN_VALUE })
-		public ResponseEntity<String> updateReply(@RequestBody ReplyVO vo, @PathVariable("rno") Long rno) {
-
-			vo.setRno(rno);
-
-			log.info("rno : " + rno);
-
-			log.info("update vo info : " + vo);
-
-			return service.updateReply(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
-					: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
-		}
+	  
 	 
 	 
 		
 		
-	 
-		@DeleteMapping(value = "/{rno}", produces = { MediaType.TEXT_PLAIN_VALUE })
-		public ResponseEntity<String> deleteReply(@PathVariable("rno") Long rno) {
-
+	    //@PreAuthorize("principal.username == #vo.replyer")
+		@DeleteMapping(value = "/{rno}/{boardNum}")
+		public String deleteReply(@PathVariable("rno") Long rno 
+				,@PathVariable("boardNum") Long boardNum, 
+				@ModelAttribute("cri") Criteria cri ) {
+				
+			 
+			//<a href="/board/readBoard?boardNum=${board.boardNum}
+			//&pageNum=${pageMaker.cri.pageNum}&amountPerPage=${pageMaker.cri.amountPerPage}">
 			log.info("remove RNO : " + rno);
+			service.deleteReply(rno);
+			return "board/readBoard";
+			 
 
-			return service.deleteReply(rno) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
-					: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
 		
 		
 		
 		
+		 
 		
-		
-		@GetMapping(value = "/pages/{bno}/{page}", 
+		@GetMapping(value = "/pages/{boardNum}", 
 				produces = { MediaType.APPLICATION_XML_VALUE,
 				MediaType.APPLICATION_JSON_UTF8_VALUE })
-		public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno) {
+		public List<ReplyVO> getList(@PathVariable("boardNum") Long boardNum) {
 
-			Criteria cri = new Criteria(page, 10);
 			
-			log.info("get Reply List bno: " + bno);
+			
+			log.info("get Reply List boardNum: " + boardNum);
 
-			log.info("cri:" + cri);
+			 
 
-			return new ResponseEntity<>(service.getListPage(cri, bno), HttpStatus.OK);
+			return service.getReplyList(boardNum);
 		}
 	
 }

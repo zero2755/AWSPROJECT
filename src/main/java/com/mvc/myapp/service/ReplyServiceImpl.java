@@ -3,11 +3,7 @@ package com.mvc.myapp.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-
-import com.mvc.myapp.domain.Criteria;
-import com.mvc.myapp.domain.ReplyPageDTO;
 import com.mvc.myapp.domain.ReplyVO;
 import com.mvc.myapp.mapper.ReplyMapper;
 
@@ -65,20 +61,16 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public List<ReplyVO> getReplyListWithPaging(Criteria cri, Long boardNum) {
-		log.info("create reply serviceImpl cri, boardNum :"+cri);
-		log.info("====boardNum : "+boardNum);
+	public List<ReplyVO> getReplyList(Long boardNum) {
+		log.info("create reply serviceImpl  ====boardNum"+boardNum);
+		 
 		
 		
 		
-		return mapper.getReplyListWithPaging(cri, boardNum);
+		return mapper.getReplyList(boardNum);
 	}
 	
-	@Override
-	public ReplyPageDTO getListPage(Criteria cri, Long bno) {
-
-		return new ReplyPageDTO(mapper.getCountByboardNum(bno), mapper.getReplyListWithPaging(cri, bno));
-	}
+	
 	
 	
 	

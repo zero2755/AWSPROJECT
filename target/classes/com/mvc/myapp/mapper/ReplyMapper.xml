@@ -32,21 +32,15 @@
 		
 	</delete>
 	
-	<select id="getReplyListWithPaging" resultType="com.mvc.myapp.domain.ReplyVO">
+	<select id="getReplyList" resultType="com.mvc.myapp.domain.ReplyVO">
 		 
 
-  <![CDATA[
- select  rno, boardNum, reply, replyer, replydate, updatedate
- from 
-   (
-    select /*+INDEX(tbl_reply7 idx_reply7) */ 
-      rownum rn,  rno, boardNum, reply, replyer, replyDate, updatedate
-    from tbl_reply7
+ 
+ select * from tbl_reply7
     where boardNum =  #{boardNum}
-    and rno > 0
-    and rownum <= #{cri.pageNum} * #{cri.amountPerPage}
-   ) where rn > (#{cri.pageNum} -1) * #{cri.amountPerPage}
-]]>
+   
+   
+
 
 	</select>
 

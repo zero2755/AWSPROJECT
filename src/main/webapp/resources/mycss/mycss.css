@@ -1,0 +1,58 @@
+#listPageTitle  {
+    color: #FCA205;
+    font-family: 'Odibee Sans', cursive;
+}
+
+#logInOut{
+	float:right;
+	margin:15px;
+}
+
+#email{
+	font-family: 'Limelight', cursive;
+}
+
+
+#searchForm{
+
+ float:right;
+
+
+	
+}
+
+#pagDiv{
+	float:left
+	
+}
+
+#Btns{
+	float:left;
+	clear:both;
+}
+
+#exampleFormControlTextarea1{
+	width: 40%;
+}
+
+table,td,tr{
+	text-align: center;
+}
+
+.btn-default{
+ clear:both;
+}
+
+#footer-body{
+	background-color:grey;
+	top:100%;
+	width:100%;
+	height:100px;
+	
+}
+
+#footer-copyright{
+	text-align:'right';
+	margin:5px;
+	
+}

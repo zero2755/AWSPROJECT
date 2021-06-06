@@ -2,8 +2,7 @@ package com.mvc.myapp.service;
 
 import java.util.List;
 
-import com.mvc.myapp.domain.Criteria;
-import com.mvc.myapp.domain.ReplyPageDTO;
+
 import com.mvc.myapp.domain.ReplyVO;
 
 public interface ReplyService {
@@ -17,9 +16,7 @@ public interface ReplyService {
 	public int deleteReply(Long rno);
 	
 	
-	public List<ReplyVO> getReplyListWithPaging(Criteria cri,Long boardNum);
-	
-	public ReplyPageDTO getListPage(Criteria cri, Long bno);
+	public List<ReplyVO> getReplyList(Long boardNum);
 	
 	
 	public int getCountByBoardNum(Long boardNum);
