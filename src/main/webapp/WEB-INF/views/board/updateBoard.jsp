@@ -55,11 +55,10 @@
 			
 			
 			
-			<button type="reset">reset</button>
-			<button type="submit" data-oper='list'>목록</button>
+			<button type="reset" class="btn btn-default">reset</button>
+			<button type="submit" data-oper='list' class="btn btn-default">게시글 목록</button>
 			
-<button type="submit" data-oper="updateBoard" class="btn btn-default">수정하기</button>
- <button type="submit" data-oper="deleteBoard" class="btn btn-default">삭제</button>			
+	
 	
 	
 	
@@ -67,10 +66,10 @@
 
 <sec:authorize access="isAuthenticated()">
 
-<c:if test="${pinfo.username eq board.writer}">
+<c:if test="${pinfo.username eq board.boardWriter}">
 
-  <button type="submit" data-oper="updateBoard">수정</button>
- <button type="submit" data-oper="deleteBoard">삭제</button>
+  <button type="submit" data-oper="updateBoard" class="btn btn-default">수정하기</button>
+ <button type="submit" data-oper="deleteBoard" class="btn btn-default">삭제</button>
 </c:if>
 </sec:authorize>	
 				

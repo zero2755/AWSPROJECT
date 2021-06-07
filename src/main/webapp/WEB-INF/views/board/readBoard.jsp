@@ -167,9 +167,35 @@
 	
 	</form>
 	<div class='readBtns'>
-	<button data-oper='createReply' class="btn btn-default">새 댓글 등록</button>
+	
+	
+
+       
+      <sec:authorize access="isAuthenticated()">
+       <button data-oper='createReply' class="btn btn-default">새 댓글 등록</button>
+      </sec:authorize>
+       
+	
+	
+	
+	 
 	<button data-oper='list' class="btn btn-default">게시글 리스트</button>
-	<button data-oper='updateBoard' class="btn btn-default">게시글 수정</button>
+	
+	
+	 
+	
+	  <sec:authentication property="principal" var="pinfo"/>
+
+        <sec:authorize access="isAuthenticated()">
+
+        <c:if test="${pinfo.username eq board.boardWriter}">
+        
+        <button data-oper='updateBoard' class="btn btn-default">게시글 수정</button>
+        
+        </c:if>
+      </sec:authorize>
+      
+	
 	</div>
 </div>
 </div>

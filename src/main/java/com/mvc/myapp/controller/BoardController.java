@@ -48,13 +48,13 @@ public class BoardController {
 	
 	
 	@GetMapping("/createBoard")
-	//@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()")
 	public void register() {
 		
 	}
 	 
 	@PostMapping("/createBoard")
-	//@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()")
 	public String createBoard(BoardVO board, RedirectAttributes rttr) {
 		
 		log.info("컨트롤러 ------보드등록" +board);
@@ -86,7 +86,7 @@ public class BoardController {
 	}
 	
 	
-	//@PreAuthorize("principal.username == #board.boardWriter")
+	@PreAuthorize("principal.username == #boardWriter")
 	@PostMapping("/updateBoard")
 	public String updateBoard(BoardVO board,
 			@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
@@ -109,7 +109,7 @@ public class BoardController {
 	}
 	
 	
-	//@PreAuthorize("principal.username == #boardWriter")
+	@PreAuthorize("principal.username == #boardWriter")
 	@PostMapping("/deleteBoard")
 	public String deleteBoard(@RequestParam("boardNum") Long boardNum,
 			@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr ,String boardWriter)
