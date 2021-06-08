@@ -71,7 +71,13 @@
 		
 		<sec:authorize access="isAnonymous()">
 		
-		<a href="/customLogin"> Login</a>
+		<a href="/customLogin">  Login  </a>
+		    
+		</sec:authorize>
+		
+		<sec:authorize access="isAnonymous()">
+		
+		<a href="/signUp">    Sign Up</a>
 		    
 		</sec:authorize>
 

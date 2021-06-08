@@ -27,6 +27,7 @@ public class ReplyServiceImpl implements ReplyService{
 	public int createReply(ReplyVO vo) {
 		log.info("create reply serviceImpl");
 		
+		log.info(vo);
 		
 		return mapper.createReply(vo);
 	}

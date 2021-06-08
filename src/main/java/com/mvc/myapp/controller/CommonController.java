@@ -7,17 +7,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.mvc.myapp.domain.MemberVO;
+import com.mvc.myapp.service.MemberService;
+
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
 public class CommonController {
+	
+	
 
 	@GetMapping("/accessError")
 	public void accessDenied(Authentication auth, Model model) {
 
 		log.info("access Denied : " + auth);
-
+		log.info("common controller");
 		model.addAttribute("msg", "Access Denied");
 	}
 
@@ -47,5 +52,8 @@ public class CommonController {
 
 		log.info("post custom logout");
 	}
-
+	
+	
+	
+	
 }

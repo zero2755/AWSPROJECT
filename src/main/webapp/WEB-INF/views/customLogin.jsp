@@ -57,18 +57,14 @@
 									<input class="form-control" placeholder="Password"
 										name="password" type="password" value="">
 								</div>
-								<div class="checkbox">
-									<label> <input name="remember-me" type="checkbox">Remember
-										Me
-									</label>
-								</div>
+								
 								<!-- Change this to a button or input when using this as a form -->
-								<a href="index.html" class="btn btn-lg btn-success btn-block">Login</a>
+								<a href="index.html" class="btn btn-primary"">Login</a>
 							</fieldset>
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
 						</form>
-						<button  class="btn btn-default"
+						<button  class="btn btn-primary"
 							onclick="location.href='/board/list'">게시글 리스트</button>
 						
 						 

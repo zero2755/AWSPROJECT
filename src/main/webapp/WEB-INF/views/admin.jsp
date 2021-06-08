@@ -22,7 +22,8 @@
  
 
 <a href="/customLogout">Logout</a>
-
+<button  class="btn btn-default"
+							onclick="location.href='/board/list'">게시글 리스트</button>
 
 </body>
 </html>

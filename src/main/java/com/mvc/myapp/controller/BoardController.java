@@ -12,8 +12,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mvc.myapp.domain.BoardVO;
 import com.mvc.myapp.domain.Criteria;
+
 import com.mvc.myapp.domain.PageDTO;
 import com.mvc.myapp.service.BoardService;
+
 import com.mvc.myapp.service.ReplyService;
 
 import lombok.AllArgsConstructor;
@@ -29,6 +31,8 @@ public class BoardController {
 	
 	private ReplyService replyService;
 	
+	
+	
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
 		
@@ -41,7 +45,7 @@ public class BoardController {
 		
 		
 		model.addAttribute("list", service.getBoardListWithPaging(cri));
-		model.addAttribute("pageMaker", new PageDTO(cri,123));
+		model.addAttribute("pageMaker", new PageDTO(cri,totalBoardCount));
 		
 		
 	}
@@ -131,6 +135,9 @@ public class BoardController {
 		
 		return "redirect:/board/list";
 	}
+	
+ 
+
 	
  
 
