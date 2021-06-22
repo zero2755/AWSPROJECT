@@ -50,15 +50,17 @@
 						<h3 class="panel-title">Logout Page</h3>
 					</div>
 					<div class="panel-body">
-						<form role="form" method='post' action="/customLogout">
+						<form role="form" method='post' action="/memberLogout">
 							<fieldset>
 								
 								<!-- Change this to a button or input when using this as a form -->
-								<a href="index.html" class="btn btn-primary">Logout</a>
+								<button  id="btn-success" class="btn btn-primary">Logout</button>
+								
 							</fieldset>
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
 						</form>
+						
 					</div>
 				</div>
 			</div>
@@ -79,7 +81,7 @@
 	
 	<script>
 	
-	$(".btn-success").on("click", function(e){
+	$("#btn-success").on("click", function(e){
 		
 		e.preventDefault();
 		$("form").submit();

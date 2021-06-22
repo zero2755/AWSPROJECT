@@ -57,7 +57,7 @@
 </head>
 <body>
 	
-<h1 id='email'>zero2755@naver.com</h1>
+<h1 id='email'> zero2755@naver.com</h1>
 
 <div id='logInOut'> 
 
@@ -65,13 +65,13 @@
     
 		<sec:authorize access="isAuthenticated()">
 		 
-		<a href="/customLogout"> Logout</a>
+		<a href="/memberLogout"> Logout</a>
 		    
 		</sec:authorize>
 		
 		<sec:authorize access="isAnonymous()">
 		
-		<a href="/customLogin">  Login  </a>
+		<a href="/memberLogin">  Login  </a>
 		    
 		</sec:authorize>
 		

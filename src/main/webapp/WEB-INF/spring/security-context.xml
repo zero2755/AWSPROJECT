@@ -7,17 +7,17 @@
 
  
 
-	<bean id="customAccessDenied"
-		class="com.mvc.myapp.security.CustomAccessDeniedHandler"></bean>
+	<bean id="MemberAccessDenied"
+		class="com.mvc.myapp.security.MemberAccessDeniedHandler"></bean>
 
-	<bean id="customLoginSuccess" class="com.mvc.myapp.security.CustomLoginSuccessHandler"></bean>
-	<!-- <bean id="customPasswordEncoder" class="com.mvc.myapp.security.CustomNoOpPasswordEncoder"></bean> -->
+	<bean id="MemberLoginSuccess" class="com.mvc.myapp.security.MemberLoginSuccessHandler"></bean>
+	<!-- <bean id="MemberPasswordEncoder" class="com.mvc.myapp.security.MemberNoOpPasswordEncoder"></bean> -->
 
 	<bean id="bcryptPasswordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
-	<bean id="customUserDetailsService"
-		class="com.mvc.myapp.security.CustomUserDetailsService"></bean>
+	<bean id="MemberUserDetailsService"
+		class="com.mvc.myapp.security.MemberUserDetailsService"></bean>
 
 
 	<security:http>
@@ -32,20 +32,20 @@
 			access="hasRole('ROLE_ADMIN')" />
 
 		<security:access-denied-handler
-			ref="customAccessDenied" />
+			ref="MemberAccessDenied" />
 
-		<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess" />
+		<security:form-login login-page="/memberLogin" authentication-success-handler-ref="MemberLoginSuccess" />
 
-		<security:form-login login-page="/customLogin" />
+		<security:form-login login-page="/memberLogin" />
 
 		<!-- <security:csrf disabled="true"/> -->
 
-		<security:logout logout-url="/customLogout"
+		<security:logout logout-url="/memberLogout"
 			invalidate-session="true" />
 
 		
 
-		<security:logout logout-url="/customLogout"
+		<security:logout logout-url="/memberLogout"
 			invalidate-session="true" delete-cookies="remember-me,JSESSION_ID" />
 
 
@@ -58,7 +58,7 @@
 	<security:authentication-manager>
 
 		<security:authentication-provider
-			user-service-ref="customUserDetailsService">
+			user-service-ref="MemberUserDetailsService">
 
 			<security:password-encoder
 				ref="bcryptPasswordEncoder" />

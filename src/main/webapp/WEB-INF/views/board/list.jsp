@@ -52,7 +52,7 @@
 
 
 <body>
-	<h1 id="listPageTitle">LIST PAGE</h1>
+	<h1 id="listPageTitle"> LIST PAGE</h1>
 	<div class="panel-body"> 
 	<table class="table table-striped table-bordered table-hover">
 		<tr>

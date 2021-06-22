@@ -58,8 +58,8 @@
 										name="password" type="password" value="">
 								</div>
 								
-								<!-- Change this to a button or input when using this as a form -->
-								<a href="index.html" class="btn btn-primary"">Login</a>
+								
+								<button id='btn-success' class="btn btn-primary">Login</button>
 							</fieldset>
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
@@ -92,7 +92,7 @@
   
   
   
-  $(".btn-success").on("click", function(e){
+  $("#btn-success").on("click", function(e){
     
     e.preventDefault();
     $("form").submit();
