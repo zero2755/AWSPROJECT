@@ -21,7 +21,7 @@
 <p>사용자 권한 리스트  : <sec:authentication property="principal.member.authList"/></p>
  
 
-<a href="/customLogout">Logout</a>
+<a href="/memberLogout">Logout</a>
 <button  class="btn btn-default"
 							onclick="location.href='/board/list'">게시글 리스트</button>
 

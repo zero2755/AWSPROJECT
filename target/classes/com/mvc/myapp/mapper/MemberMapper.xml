@@ -31,16 +31,13 @@ WHERE mem.userid = #{userid}
  
 	<insert id="signUp">
 	
-	  {call
-        declare
-        begin
+	 
            insert into tbl_member (userid,userpw, username)
 		values (#{userid},#{userpw},#{userName});
 		
 			insert into tbl_member_auth (userid,auth)
 		values (#{userid},'ROLE_MEMBER');
-        end
-    }
+        
 		 
 	</insert>
 

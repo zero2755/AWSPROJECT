@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.mvc.myapp.domain.MemberVO;
-import com.mvc.myapp.service.MemberService;
+//import com.mvc.myapp.service.MemberService;
 
 import lombok.extern.log4j.Log4j;
 

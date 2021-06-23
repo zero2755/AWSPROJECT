@@ -176,18 +176,7 @@
 
 	
 	
-	<!-- form형식 확장을 위해 -->
 	
-	 <sec:authentication property="principal" var="pinfo"/>
-
-        <sec:authorize access="isAuthenticated()">
-
-        <c:if test="${pinfo.username eq board.boardWriter}">
-        
-        <button data-oper='updateBoard'>게시글 수정</button>
-        
-        </c:if>
-      </sec:authorize>
 	
 	
 	

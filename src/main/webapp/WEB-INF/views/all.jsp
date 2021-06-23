@@ -16,13 +16,13 @@
 
 <sec:authorize access="isAnonymous()">
 
-  <a href="/customLogin">로그인</a>
+  <a href="/memberLogin">로그인</a>
  
 </sec:authorize>
 
 <sec:authorize access="isAuthenticated()">
 
-  <a href="/customLogout">로그아웃</a>
+  <a href="/memberLogout">로그아웃</a>
 
 </sec:authorize>
 

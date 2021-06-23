@@ -109,9 +109,13 @@
 							end="${pageMaker.endPage}">
 							
 							<li class="page-item">
+								<a href="/board/list?type=${pageMaker.cri.type}&keyword=${pageMaker.cri.keyword}&pageNum=${num}&amountPerPage=${pageMaker.cri.amountPerPage}">${num}</a></li>
+								
+								<!-- 
 								<a href="/board/list?pageNum=${num}&amountPerPage=${pageMaker.cri.amountPerPage}">${num}</a></li>
-							
-							
+								
+								 -->
+								 
 						</c:forEach>
 
 						<c:if test="${pageMaker.next}">
@@ -155,7 +159,7 @@
 							</select> <input type='text' name='keyword'
 								value='<c:out value="${pageMaker.cri.keyword}"/>' /> <input
 								type='hidden' name='pageNum'
-								value='<c:out value="${pageMaker.cri.pageNum}"/>' /> <input
+								value='<c:out value="1"/>' /> <input
 								type='hidden' name='amountPerPage'
 								value='<c:out value="${pageMaker.cri.amountPerPage}"/>' />
 							<button >Search</button>

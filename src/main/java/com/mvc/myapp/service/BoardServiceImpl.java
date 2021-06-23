@@ -71,6 +71,8 @@ public class BoardServiceImpl  implements BoardService{
 		
 		log.info("cri 정보 : " +cri);
 		
+		
+		
 		return mapper.getBoardListWithPaging(cri);
 		
 	}

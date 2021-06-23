@@ -42,7 +42,7 @@ public class MemberController {
 	    
 	    log.info("do all can access everybody");
 	  }
-	  
+	   
 	 @GetMapping("/member")
 	  public void doMember() {
 	    

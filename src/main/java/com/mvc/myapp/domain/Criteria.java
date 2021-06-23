@@ -10,6 +10,9 @@ public class Criteria {
 	private String type;
 	private String keyword;
 	
+	private int startBoardNum;
+	
+	
 	public Criteria() {
 		this(1,10);
 	}
@@ -18,7 +21,15 @@ public class Criteria {
 		
 		this.pageNum=pageNum;
 		this.amountPerPage=amountPerPage;
+		 
 		
+		 
+		
+		
+	}
+	
+	public void setStartBoardNum() {
+		this.startBoardNum=(pageNum-1) * amountPerPage;
 	}
 	
 	public String[] getTypeArr() {

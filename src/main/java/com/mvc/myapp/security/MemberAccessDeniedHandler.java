@@ -23,6 +23,8 @@ public class MemberAccessDeniedHandler implements AccessDeniedHandler {
     log.error("Access Denied Handler");
 
     log.error("Redirect....");
+    
+    log.info(accessException);
 
     response.sendRedirect("/accessError");
 

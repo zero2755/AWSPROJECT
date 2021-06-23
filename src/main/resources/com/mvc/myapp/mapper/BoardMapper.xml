@@ -13,44 +13,52 @@ select * from tbl_board7 where boardNum > 0
 
 </select>
 
+<sql id="search">
+		<if test="type != null">
+			<if test="type == 'T'.toString()">
+				and boardTitle like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'C'.toString()">
+				and boardContent like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'W'.toString()">
+				and boardWriter like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'TC'.toString()">
+				and ( boardTitle like CONCAT('%', #{keyword}, '%') OR boardContent like
+				CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="type == 'CW'.toString()">
+				and ( boardContent like CONCAT('%', #{keyword}, '%') OR boardWriter like
+				CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="type == 'TCW'.toString()">
+				and ( boardTitle like CONCAT('%', #{keyword}, '%')
+				OR
+				boardContent like CONCAT('%', #{keyword}, '%')
+				OR
+				boardWriter like CONCAT('%', #{keyword}, '%'))
+			</if>
+		</if>
+	</sql>
+
 
 <select id="getBoardListWithPaging" resultType="com.mvc.myapp.domain.BoardVO"> 
 		
+		<![CDATA[  
+  select * 
+  from tbl_board7 
+  where boardNum > 0 
+]]>
+
+		<include refid="search"></include>
+  
+ 
+  order by boardNum desc
+  limit  #{startBoardNum}   , #{amountPerPage}
+
 		
-		 <![CDATA[
-  select 
-    boardNum, boardTitle, boardContent, boardWriter, regdate, updatedate
-  from 
-      (
-      select /*+INDEX_DESC(tbl_board7 pk_board7) */
-        rownum rn, boardNum, boardTitle, boardContent, boardWriter, regdate, updatedate 
-      from 
-        tbl_board7
-      where 
-  ]]>
-		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-			<foreach item='type' collection="typeArr">
-				<trim prefix="OR">
-					<choose>
-						<when test="type == 'T'.toString()">
-							boardTitle like '%'||#{keyword}||'%'
-						</when>
-						<when test="type == 'C'.toString()">
-							boardContent like '%'||#{keyword}||'%'
-						</when>
-						<when test="type == 'W'.toString()">
-							boardWriter like '%'||#{keyword}||'%'
-						</when>
-					</choose>
-				</trim>
-			</foreach>
-		</trim>
-      
-  <![CDATA[    
-      rownum <= #{pageNum} * #{amountPerPage}
-      )
-  where rn > (#{pageNum} -1) * #{amountPerPage}   
-  ]]>
+	 
 		
 </select>
 
@@ -59,10 +67,7 @@ select * from tbl_board7 where boardNum > 0
 
 
 <insert id="createBoard">
-	<selectKey keyProperty="boardNum" order="BEFORE"
-	resultType="long">
-	select seq_board7.nextval from dual
-	</selectKey>
+	
 	
 	insert into tbl_board7 (boardNum,boardTitle,boardContent,boardWriter)
 	values (#{boardNum}, #{boardTitle}, #{boardContent}, #{boardWriter})
@@ -78,8 +83,8 @@ select * from tbl_board7 where boardNum = #{boardNum}
 
 <update id="updateBoard">
 	update tbl_board7 set boardTitle=#{boardTitle},
-	boardContent=#{boardContent}, boardWriter=#{boardWriter},
-	updateDate=sysdate
+	boardContent=#{boardContent}, boardWriter=#{boardWriter}
+	
 	where boardNum=#{boardNum}
 
 </update>

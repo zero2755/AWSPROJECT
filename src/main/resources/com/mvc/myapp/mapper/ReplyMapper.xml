@@ -7,8 +7,8 @@
 	
 	<insert id="createReply">
 		
-		insert into tbl_reply7 (rno, boardNum, reply, replyer)
-		values  ( seq_reply7.nextval, #{boardNum}, #{reply}, #{replyer})
+		insert into tbl_reply7 ( boardNum, reply, replyer)
+		values  (  #{boardNum}, #{reply}, #{replyer})
 	
 	</insert>
 	
@@ -21,7 +21,7 @@
 	
 	<update id="updateReply">
 	
-		update tbl_reply7 set reply = #{reply}, updateDate=sysdate where rno=#{rno}
+		update tbl_reply7 set reply = #{reply} where rno=#{rno}
 	
 	</update>
 	

@@ -40,7 +40,7 @@ public class BoardController {
 		//model.addAttribute("list", service.getBoardList());
 		
 		int totalBoardCount=service.getTotal(cri);
-		
+		cri.setStartBoardNum();
 		log.info("총 보드 갯수 : " +totalBoardCount);
 		
 		
@@ -90,7 +90,7 @@ public class BoardController {
 	}
 	
 	
-	@PreAuthorize("principal.username == #boardWriter")
+	
 	@PostMapping("/updateBoard")
 	public String updateBoard(BoardVO board,
 			@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {

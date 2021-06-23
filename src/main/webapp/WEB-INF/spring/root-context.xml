@@ -28,31 +28,47 @@
 	
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	
-	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+	<!-- for hosting -->
 	
-		<property name="driverClassName"
-			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-		<property name="jdbcUrl"
-			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
-		<property name="username" value="scott"></property>
-		<property name="password" value="tiger2"></property>
+	<bean id="dataSource" 
+      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      
+	<property name="driverClassName" 
+	        value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+	        
+	<property name="url" 
+	        value="jdbc:log4jdbc:mysql://127.0.0.1:3307/mydb?allowMultiQueries=true"></property>
+	        
+	<property name="username" value="scott"></property>
+	<property name="password" value="tiger2"></property>
 	
+</bean>	
+
 	
-	</bean>
+<bean id="sqlSessionFactory" 
+      class="org.mybatis.spring.SqlSessionFactoryBean">
+      
+ 	<property name="dataSource" ref="dataSource" />
+	<property name="configLocation" 
+				value="classpath:/mybatis-config.xml"></property>
+	<property name="mapperLocations" 
+	      value="classpath:com/mvc/myapp/mapper/**/*Mapper.xml"></property>			
+</bean>
+
+
+
+  
+<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" 
+   destroy-method="clearCache">
+  <constructor-arg name="sqlSessionFactory" 
+    ref="sqlSessionFactory"></constructor-arg>
+</bean>
 	
-	<!-- HikariCp configuration -->
-	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-	<constructor-arg ref="hikariConfig"/>
-	</bean>
-	
-	<bean id="sqlSessionFactory"
-		class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"></property>	
-	</bean>
+	<!-- for hosting end -->
 	
 	<mybatis-spring:scan base-package="com.mvc.myapp.mapper" />
 	
-	
+	 
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	
