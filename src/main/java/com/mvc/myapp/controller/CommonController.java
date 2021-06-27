@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mvc.myapp.domain.MemberVO;
 //import com.mvc.myapp.service.MemberService;
@@ -17,7 +19,11 @@ import lombok.extern.log4j.Log4j;
 public class CommonController {
 	
 	
-
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String home() {
+		return "home";
+	}
+	
 	@GetMapping("/accessError")
 	public void accessDenied(Authentication auth, Model model) {
 

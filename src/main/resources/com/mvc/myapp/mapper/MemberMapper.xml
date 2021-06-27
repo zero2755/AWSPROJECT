@@ -29,13 +29,27 @@ FROM
 WHERE mem.userid = #{userid} 
   </select>
  
-	<insert id="signUp">
+	<insert id="signUpMember">
+	
+	
+          
+		
+		INSERT INTO tbl_member (userid,userpw,username)
+		values(#{userid},#{userpw},#{userName});
+		
+		
+        
+		 
+	</insert>
+	
+		<insert id="signUpMemberAuth">
 	
 	 
-           insert into tbl_member (userid,userpw, username)
-		values (#{userid},#{userpw},#{userName});
+          
 		
-			insert into tbl_member_auth (userid,auth)
+	
+		
+		INSERT INTO tbl_member_auth (userid,auth)
 		values (#{userid},'ROLE_MEMBER');
         
 		 

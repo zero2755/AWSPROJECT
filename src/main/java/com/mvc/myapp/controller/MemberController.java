@@ -1,13 +1,12 @@
 package com.mvc.myapp.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.mvc.myapp.domain.MemberVO;
-
 import com.mvc.myapp.service.MemberService;
-
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -26,13 +25,14 @@ public class MemberController {
 		 
 	}
 	
-	
+	@Transactional
 	@PostMapping("/signUp")
 	public String signUp(MemberVO vo) {
 
 		log.info("signUp post");
 		
-		memberService.signUp(vo);
+		memberService.signUpMember(vo);
+		memberService.signUpMemberAuth(vo);
 		
 		return "redirect:/board/list";
 	}

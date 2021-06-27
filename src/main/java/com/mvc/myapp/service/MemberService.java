@@ -23,13 +23,23 @@ public class MemberService {
 	@Setter(onMethod_ = @Autowired)
 	private PasswordEncoder pwencoder;
 	
-	public void signUp(MemberVO vo) {
+
+	
+	public void signUpMember(MemberVO vo) {
 		vo.setUserpw(pwencoder.encode(vo.getUserpw()));
 		
-		log.info("service ================"+vo);
+		log.info("service ================Member"+vo);
 		
 		
-		mapper.signUp(vo);
+		mapper.signUpMember(vo);
+	}
+	public void signUpMemberAuth(MemberVO vo) {
+		vo.setUserpw(pwencoder.encode(vo.getUserpw()));
+		
+		log.info("service ================MemberAuth"+vo);
+		
+		
+		mapper.signUpMemberAuth(vo);
 	}
 	
 }

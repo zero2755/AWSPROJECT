@@ -29,21 +29,22 @@
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	
 	<!-- for hosting -->
-	
+	<!-- 
 	<bean id="dataSource" 
       class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-      
+      -->
+ <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 	<property name="driverClassName" 
-	        value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+	        value="com.mysql.jdbc.Driver"></property>
 	        
 	<property name="url" 
-	        value="jdbc:log4jdbc:mysql://127.0.0.1:3307/mydb?allowMultiQueries=true"></property>
+	        value="jdbc:mysql://localhost:3306/zero2755?autoReconnect=true"></property>
 	        
-	<property name="username" value="scott"></property>
-	<property name="password" value="tiger2"></property>
+	<property name="username" value="유저"></property>
+	<property name="password" value="비번"></property>
 	
 </bean>	
-
+ 
 	
 <bean id="sqlSessionFactory" 
       class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -56,7 +57,7 @@
 </bean>
 
 
-
+ 
   
 <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" 
    destroy-method="clearCache">
